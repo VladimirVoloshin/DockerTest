@@ -1,26 +1,28 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-#Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
-#For more information, please see https://aka.ms/containercompat
-
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5173
+
+ENV ASPNETCORE_URLS=http://+:5173
+
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+# For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG configuration=Release
-#WORKDIR /src
-COPY ["WebAPI/WebAPI.csproj", "src/"]
-RUN dotnet restore "src/WebAPI.csproj"
+WORKDIR /src
+COPY ["src/WebApi.csproj", "src/"]
+RUN dotnet restore "src/WebApi.csproj"
 COPY . .
-WORKDIR "/src"
-RUN dotnet build "WebAPI.csproj" -c Release -o /app/build
+WORKDIR "/src/src"
+RUN dotnet build "WebApi.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "WebAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ARG configuration=Release
+RUN dotnet publish "WebApi.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebAPI.dll"]
+ENTRYPOINT ["dotnet", "WebApi.dll"]
