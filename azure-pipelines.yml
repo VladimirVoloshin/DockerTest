@@ -20,6 +20,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    - powershell: Get-ChildItem -Path 'Insert root path' -recurse
     - task: Docker@2
       displayName: Build an image
       inputs:
@@ -27,4 +28,4 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/WebAPI/Dockerfile'
         tags: |
           $(tag)
-    - powershell: Get-ChildItem -Path 'Insert root path' -recurse
+
