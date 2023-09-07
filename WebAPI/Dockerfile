@@ -11,10 +11,10 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG configuration=Release
 WORKDIR /src/WebAPI
-COPY ["WebAPI/WebAPI.csproj", "WebAPI/"]
-RUN dotnet restore "WebAPI/WebAPI.csproj"
+COPY ["src/WebAPI/WebAPI.csproj", "src/"]
+RUN dotnet restore "src/WebAPI.csproj"
 COPY . .
-WORKDIR "/WebAPI"
+WORKDIR "/src"
 RUN dotnet build "WebAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
