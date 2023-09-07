@@ -27,3 +27,4 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/WebAPI/Dockerfile'
         tags: |
           $(tag)
+    - powershell: Get-ChildItem -Path 'Insert root path' -recurse
