@@ -1,0 +1,22 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/bin
+/obj
+/ClientApp/.vscode
+/ClientApp/bin
+/ClientApp/obj
+/Web API/bin
+/Web API/obj
+/Web API/.vscode
+/Web API/Web API.csproj.user
+/DomainService/bin
+/DomainService/obj
+/DomainService/.vscode
+/Business.DomainService/bin
+/Business.DomainService/obj
+/Business.DomainService/.vscode
+/WebAPI/bin/Debug/net7.0
+/WebAPI/obj
