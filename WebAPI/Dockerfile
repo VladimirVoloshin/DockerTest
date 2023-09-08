@@ -12,7 +12,7 @@ USER appuser
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["WebApi/WebApi.csproj", "WebApi/"]
+COPY ["WebAPI/WebAPI.csproj", "src/"]
 RUN dotnet restore "WebApi/WebApi.csproj"
 COPY . .
 WORKDIR "/src/src"
