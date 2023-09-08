@@ -12,17 +12,17 @@ USER appuser
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["WebAPI/WebAPI.csproj", "src/"]
-RUN dotnet restore "WebApi/WebApi.csproj"
+COPY ["WebAPI.csproj", "src/"]
+RUN dotnet restore "src/WebAPI.csproj"
 COPY . .
-WORKDIR "/src/src"
-RUN dotnet build "WebApi.csproj" -c $configuration -o /app/build
+WORKDIR "/src"
+RUN dotnet build "WebAPI.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
 ARG configuration=Release
-RUN dotnet publish "WebApi.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "WebAPI.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebApi.dll"]
+ENTRYPOINT ["dotnet", "WebAPI.dll"]
