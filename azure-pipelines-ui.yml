@@ -14,7 +14,7 @@ trigger:
 pool:
   name: Azure Pipelines
   demands: npm
-
+ 
 steps:
 - task: Npm@1
   displayName: 'npm install'
