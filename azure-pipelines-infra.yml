@@ -1,0 +1,9 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: . 'Infrastructure/deploy.ps1'
+  displayName: 'Run infrastructure script'
