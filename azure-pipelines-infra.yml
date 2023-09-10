@@ -1,15 +1,11 @@
 trigger:
   - main
 
-parameters:
-  - name: subscriptionConn
-    type: string
-    # default: DockerTestSubscriptionConnection
-
 pool:
   vmImage: ubuntu-latest
 
 variables:
+  - name: subscriptionConn
   - name: resourceGroupName
     value: DockerDeployTestRG
   - name: location
