@@ -4,6 +4,7 @@ trigger:
 parameters:
   - name: subscriptionConn
     type: string
+    default: DockerTestSubscriptionConnection
 
 pool:
   vmImage: ubuntu-latest
