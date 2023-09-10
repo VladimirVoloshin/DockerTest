@@ -5,5 +5,8 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: . 'Infrastructure/deploy.ps1'
-  displayName: 'Run infrastructure script'
+  - pwsh: Infrastructure/deploy.ps1
+    displayName: 'Run infrastructure script'
+# - script: . 'Infrastructure/deploy.ps1'
+#   displayName: 'Run infrastructure script'
+

@@ -12,6 +12,11 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
+- stage: Infrastructure
+  displayName: Infrastructure
+  jobs:
+  - job: ResourceGroup
+    displayName: Create Resource Group
 - stage: Build
   displayName: Build image
   jobs:
