@@ -10,6 +10,8 @@ variables:
     value: DockerDeployTestRG
   - name: location
     value: westeurope
+  - name: imageWebApiName
+    value: webapidockertest
 
 steps:
   - task: AzureCLI@2
@@ -20,6 +22,17 @@ steps:
       scriptLocation: inlineScript
       inlineScript: |
         az group create --name $(resourceGroupName) --location $(location)
+  - task: AzureCLI@2
+    displayName: Create Resources
+    inputs:
+      azureSubscription: $(lib-subscriptionConn)
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        $result = (az deployment group create `
+        --resource-group $(resourceGroupName) `
+        --template-file ./infrastructure/main.bicep `
+        --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json
 
     # - pwsh: ./Infrastructure/deploy.ps1
     #   displayName: 'Run infrastructure script'
