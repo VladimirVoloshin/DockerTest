@@ -5,6 +5,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
+  - group: DockerTest
   - name: resourceGroupName
     value: DockerDeployTestRG
   - name: location
