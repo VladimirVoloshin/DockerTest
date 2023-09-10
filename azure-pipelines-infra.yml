@@ -23,7 +23,7 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        az group create --name $resourceGroupName --location $location
+        az group create --name $(resourceGroupName) --location $(location)
 
     # - pwsh: ./Infrastructure/deploy.ps1
     #   displayName: 'Run infrastructure script'
