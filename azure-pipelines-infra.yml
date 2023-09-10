@@ -6,6 +6,7 @@ pool:
 
 variables:
   - name: subscriptionConn
+    value: $(subscriptionConn)
   - name: resourceGroupName
     value: DockerDeployTestRG
   - name: location
