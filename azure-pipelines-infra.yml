@@ -4,6 +4,7 @@ trigger:
 parameters:
   - name: subscriptionId
     type: string
+    default: 32de0203-f852-40a8-87b2-611e68a7e808
 
 pool:
   vmImage: ubuntu-latest
