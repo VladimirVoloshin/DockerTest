@@ -2,9 +2,8 @@ trigger:
   - main
 
 parameters:
-  - name: subscriptionId
+  - name: subscriptionConn
     type: string
-    default: 32de0203-f852-40a8-87b2-611e68a7e808
 
 pool:
   vmImage: ubuntu-latest
@@ -19,7 +18,7 @@ steps:
   - task: AzureCLI@2
     displayName: Create Resource Group
     inputs:
-      azureSubscription: $subscriptionId
+      azureSubscription: $subscriptionConn
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
