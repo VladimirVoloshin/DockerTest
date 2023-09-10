@@ -31,7 +31,7 @@ steps:
       inlineScript: |
         az deployment group create \
         --resource-group $(resourceGroupName) \
-        --template-file $(Build.SourcesDirectory)/infrastructure/main.bicep \
+        --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep \
         --parameters location=$(location) imageWebApiName=$(imageWebApiName)
 
     # - pwsh: ./Infrastructure/deploy.ps1
