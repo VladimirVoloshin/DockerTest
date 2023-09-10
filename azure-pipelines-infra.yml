@@ -5,8 +5,6 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  - name: subscriptionConn
-    value: $(subscriptionConn)
   - name: resourceGroupName
     value: DockerDeployTestRG
   - name: location
