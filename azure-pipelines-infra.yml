@@ -29,10 +29,10 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        $result = (az deployment group create `
+        az deployment group create `
         --resource-group $(resourceGroupName) `
         --template-file ./infrastructure/main.bicep `
-        --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json
+        --parameters location=$(location) imageWebApiName=$(imageWebApiName)
 
     # - pwsh: ./Infrastructure/deploy.ps1
     #   displayName: 'Run infrastructure script'
