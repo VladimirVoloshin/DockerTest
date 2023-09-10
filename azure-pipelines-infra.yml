@@ -4,7 +4,7 @@ trigger:
 parameters:
   - name: subscriptionConn
     type: string
-    default: DockerTestSubscriptionConnection
+    # default: DockerTestSubscriptionConnection
 
 pool:
   vmImage: ubuntu-latest
@@ -19,7 +19,7 @@ steps:
   - task: AzureCLI@2
     displayName: Create Resource Group
     inputs:
-      azureSubscription: DockerTestSubscriptionConnection
+      azureSubscription: $(subscriptionConn)
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
