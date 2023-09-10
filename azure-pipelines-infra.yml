@@ -1,12 +1,32 @@
 trigger:
-- main
+  - main
+
+parameters:
+  - name: subscriptionId
+    type: string
 
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  - name: resourceGroupName
+    value: DockerDeployTestRG
+  - name: location
+    value: westeurope
+
 steps:
-  - pwsh: ./Infrastructure/deploy.ps1
-    displayName: 'Run infrastructure script'
+  - task: AzureCLI@2
+    displayName: Create Resource Group
+    inputs:
+      azureSubscription: $subscriptionId
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az group create --name $resourceGroupName --location $location
+
+    # - pwsh: ./Infrastructure/deploy.ps1
+    #   displayName: 'Run infrastructure script'
+
 # - script: . 'Infrastructure/deploy.ps1'
 #   displayName: 'Run infrastructure script'
 
