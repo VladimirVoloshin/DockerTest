@@ -29,9 +29,9 @@ steps:
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        az deployment group create `
-        --resource-group $(resourceGroupName) `
-        --template-file ./infrastructure/main.bicep `
+        az deployment group create 
+        --resource-group $(resourceGroupName) 
+        --template-file ./infrastructure/main.bicep 
         --parameters location=$(location) imageWebApiName=$(imageWebApiName)
 
     # - pwsh: ./Infrastructure/deploy.ps1
