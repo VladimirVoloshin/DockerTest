@@ -12,7 +12,6 @@ variables:
     value: westeurope
   - name: imageWebApiName
     value: webapidockertest
-  - name: imageRepository
 
 stages:
   - stage: Infrastructure
@@ -67,7 +66,7 @@ stages:
             displayName: Build and push an image to container registry
             inputs:
               command: buildAndPush
-              repository: $(imageRepository)
+              repository: $(imageWebApiName)
               dockerfile: "$(Build.SourcesDirectory)/WebAPI/Dockerfile"
               containerRegistry: $(lib-dockerRegistryServiceConn)
               tags: |
