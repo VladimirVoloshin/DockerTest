@@ -1,7 +1,8 @@
 param location string
 param imageWebApiName string
 
-var random = uniqueString('utcnow()')
+//var random = uniqueString('utcnow()')
+var random = 'd0ck8r'
 var acrSku = 'Basic'
 var webAppSku = 'F1'
 
