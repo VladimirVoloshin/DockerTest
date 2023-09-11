@@ -13,23 +13,28 @@ variables:
   - name: imageWebApiName
     value: webapidockertest
 
-steps:
-  - task: AzureCLI@2
-    displayName: Create Resource Group
-    inputs:
-      azureSubscription: $(lib-subscriptionConn)
-      scriptType: bash
-      scriptLocation: inlineScript
-      inlineScript: |
-        az group create --name $(resourceGroupName) --location $(location)
-  - task: AzureCLI@2
-    displayName: Create Resources
-    inputs:
-      azureSubscription: $(lib-subscriptionConn)
-      scriptType: bash
-      scriptLocation: inlineScript
-      inlineScript: |
-        az deployment group create \
-        --resource-group $(resourceGroupName) \
-        --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep \
-        --parameters location=$(location) imageWebApiName=$(imageWebApiName)
+stages:
+- stage: Infrastructure
+  displayName: Infrastructure
+  - job: Infrastruction
+    displayName: Create infrastruction
+    steps:
+      - task: AzureCLI@2
+        displayName: Create Resource Group
+        inputs:
+          azureSubscription: $(lib-subscriptionConn)
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            az group create --name $(resourceGroupName) --location $(location)
+      - task: AzureCLI@2
+        displayName: Create Resources
+        inputs:
+          azureSubscription: $(lib-subscriptionConn)
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            az deployment group create \
+            --resource-group $(resourceGroupName) \
+            --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep \
+            --parameters location=$(location) imageWebApiName=$(imageWebApiName)
