@@ -39,3 +39,19 @@ stages:
                 --resource-group $(resourceGroupName) \
                 --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep \
                 --parameters location=$(location) imageWebApiName=$(imageWebApiName)
+- stage: Build
+  displayName: Build
+  jobs:
+    - job: Build
+      displayName: Docker build
+      pool:
+        vmImage: ubuntu-latest
+      steps:
+        - powershell: Get-ChildItem -Path 'Insert root path' -recurse
+        - task: Docker@2
+          displayName: Build an image
+          inputs:
+            command: build
+            dockerfile: '$(Build.SourcesDirectory)/WebAPI/Dockerfile'
+            tags: |
+              $(imageWebApiName)
