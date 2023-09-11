@@ -41,7 +41,7 @@ resource webApi 'Microsoft.Web/sites@2020-06-01' = {
     serverFarmId: plan.id
     siteConfig: {
       minTlsVersion: '1.2'
-      linuxFxVersion: 'DOCKER|${acrResource.name}.azurecr.io/${imageWebApiName}:latest'
+      linuxFxVersion: 'DOCKER|${acrResource.name}.azurecr.io/${imageWebApiName}'
       appSettings: [
         {
           name: 'ASPNETCORE_ENVIRONMENT'

@@ -12,7 +12,8 @@ variables:
     value: westeurope
   - name: imageWebApiName
     value: webapidockertest
-
+  - name: tag
+    value: "$(Build.BuildId)"
 stages:
   - stage: Infrastructure
     displayName: Infrastructure
