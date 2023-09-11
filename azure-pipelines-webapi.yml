@@ -1,42 +1,59 @@
 trigger:
- branches:
-  include:
-    - development
- paths:
-   include:
-     - WebAPI
+  - main
 
 pool:
-  name: Azure Pipelines
+  vmImage: ubuntu-latest
 
 variables:
-  projectToBuild: '**/*.csproj'
- 
-steps:
-- task: DotNetCoreCLI@2
-  displayName: Restore
-  inputs:
-    command: 'restore'
-    projects: '$(projectToBuild)'
-    feedsToUse: 'select'
-
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: 'build'
-    projects: '$(projectToBuild)'
-    arguments: '--configuration $(BuildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  displayName: Publish
-  inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-    zipAfterPublish: True
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-  condition: succeededOrFailed()
+  - group: DockerTest
+  - name: resourceGroupName
+    value: DockerDeployTestRG
+  - name: location
+    value: westeurope
+  - name: imageWebApiName
+    value: webapidockertest
+  - name: tag
+    value: "$(Build.BuildId)"
+stages:
+  - stage: Infrastructure
+    displayName: Infrastructure
+    jobs:
+      - job: Infrastruction
+        displayName: Create infrastruction
+        steps:
+          - task: AzureCLI@2
+            displayName: Create Resource Group
+            inputs:
+              azureSubscription: $(lib-subscriptionConn)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az group create --name $(resourceGroupName) --location $(location)
+          - task: AzureCLI@2
+            displayName: Create Resources
+            inputs:
+              azureSubscription: $(lib-subscriptionConn)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az deployment group create \
+                --resource-group $(resourceGroupName) \
+                --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep \
+                --parameters location=$(location) imageWebApiName=$(imageWebApiName)
+  - stage: Build
+    displayName: Build
+    jobs:
+      - job: Build
+        displayName: Docker build
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: $(imageWebApiName)
+              dockerfile: "$(Build.SourcesDirectory)/WebAPI/Dockerfile"
+              containerRegistry: $(lib-dockerRegistryServiceConn)
+              tags: |
+                latest
