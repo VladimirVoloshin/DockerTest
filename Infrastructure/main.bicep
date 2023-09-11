@@ -6,7 +6,7 @@ var random = 'd0ck8r'
 var acrSku = 'Basic'
 var webAppSku = 'F1'
 
-resource acrResource 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
+resource acrResource 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
   name: '${random}dockerregistry'
   location: location
   sku: {
@@ -30,7 +30,7 @@ resource plan 'Microsoft.Web/serverfarms@2022-09-01' = {
   kind: 'app,linux,container'
 }
 
-resource webApi 'Microsoft.Web/sites@2020-06-01' = {
+resource webApi 'Microsoft.Web/sites@2022-09-01' = {
   name: '${random}-webapi'
   location: location
   kind: 'app,linux,container'
@@ -45,7 +45,7 @@ resource webApi 'Microsoft.Web/sites@2020-06-01' = {
       appSettings: [
         {
           name: 'ASPNETCORE_ENVIRONMENT'
-          value: 'Development'
+          value: 'Production'
         }
         {
           name: 'WEBSITES_ENABLE_APP_SERVICE_STORAGE'
