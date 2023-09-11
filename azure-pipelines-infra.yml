@@ -71,4 +71,4 @@ stages:
               dockerfile: "$(Build.SourcesDirectory)/WebAPI/Dockerfile"
               containerRegistry: $(lib-dockerRegistryServiceConn)
               tags: |
-                $(imageWebApiName):latest
+                latest
