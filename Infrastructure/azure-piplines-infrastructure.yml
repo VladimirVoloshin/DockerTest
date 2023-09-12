@@ -35,7 +35,7 @@ stages:
               scriptType: pscore
               scriptLocation: inlineScript
               inlineScript: |
-               ##vso[task.setvariable variable=myJobVar]this is the same job
+               Write-Host "##vso[task.setvariable variable=containerRegistryNameOut]ContainerRegistryNAme"
               #  $result = $($(az deployment group create `
               #  --resource-group $(resourceGroupName) `
               #  --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
@@ -47,7 +47,7 @@ stages:
               #  Write-Host WebAppName: $webAppName
               #  Write-Host ##vso[task.setvariable variable=containerRegistryNameOut]$containerRegistryName
               #  Write-Host ##vso[task.setvariable variable=webAppNameOut]$webAppNam
-          - powershell: Write-Host $(myJobVar)
+          - powershell: echo $(containerRegistryNameOut)
           - task: AzureCLI@2
             displayName: 'Add webhook for WebApi Image from registry'
             inputs:
