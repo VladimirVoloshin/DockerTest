@@ -35,7 +35,23 @@ stages:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-                az deployment group create \
+                $(result) = (az deployment group create \
                 --resource-group $(resourceGroupName) \
                 --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep \
-                --parameters location=$(location) imageWebApiName=$(imageWebApiName)
+                --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json \
+                $(containerRegistryName) = $result.properties.outputs.containerRegistryName.value \
+                $(webAppName) = $(result.properties.outputs.webAppName.value)
+          - task: AzureCLI@2
+            displayName: 'Add webhook for WebApi Image from registry'
+            inputs:
+              azureSubscription: $(lib-subscriptionConn)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az acr webhook create \
+                --name "$(imageWebName)CD" \
+                --registry $containerRegistryName \
+                --resource-group $resourceGroupName \
+                --actions push \
+                --uri $(az webapp deployment container config --name $webAppName --resource-group $resourceGroupName --enable-cd true --query CI_CD_URL --output tsv) \
+                --scope "$($imageWebName):latest"
