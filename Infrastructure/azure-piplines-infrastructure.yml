@@ -51,9 +51,9 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 az acr webhook create `
-                --name "$(imageWebName)CD" `
+                --name "$(imageWebApiName)CD" `
                 --registry $(containerRegistryName) `
                 --resource-group $(resourceGroupName) `
                 --actions push `
                 --uri $(az webapp deployment container config --name $(webAppName) --resource-group $resourceGroupName --enable-cd true --query CI_CD_URL --output tsv) `
-                --scope "$($imageWebName):latest"
+                --scope "$($imageWebApiName):latest"
