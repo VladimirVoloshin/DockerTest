@@ -55,7 +55,7 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                echo $(containerRegistryNameOut)
-               echo $(containerRegistryNameOut)
+               echo $(webAppNameOut)
                az acr webhook create `
                --name $(imageWebApiName)CD `
                --registry $(containerRegistryNameOut) `
