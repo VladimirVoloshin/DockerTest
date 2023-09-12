@@ -35,12 +35,12 @@ stages:
               scriptType: pscore
               scriptLocation: inlineScript
               inlineScript: |
-                $(result) = (az deployment group create `
+                $result = (az deployment group create `
                 --resource-group $(resourceGroupName) `
                 --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
                 --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json `
-                $(containerRegistryName) = $result.properties.outputs.containerRegistryName.value `
-                $(webAppName) = $(result.properties.outputs.webAppName.value)
+                $containerRegistryName = $result.properties.outputs.containerRegistryName.value `
+                $webAppName = $result.properties.outputs.webAppName.value
           - task: AzureCLI@2
             displayName: 'Add webhook for WebApi Image from registry'
             inputs:
