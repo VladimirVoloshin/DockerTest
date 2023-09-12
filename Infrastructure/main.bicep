@@ -4,7 +4,7 @@ param imageWebApiName string
 //var random = uniqueString('utcnow()')
 var random = 'd0ck8r'
 var acrSku = 'Basic'
-var webAppSku = 'F1'
+var webAppSku = 'S1'
 
 resource acrResource 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
   name: '${random}dockerregistry'
@@ -39,7 +39,9 @@ resource webApi 'Microsoft.Web/sites@2022-09-01' = {
   }
   properties: {
     serverFarmId: plan.id
+    httpsOnly: true
     siteConfig: {
+      alwaysOn: true
       minTlsVersion: '1.2'
       linuxFxVersion: 'DOCKER|${acrResource.name}.azurecr.io/${imageWebApiName}:latest'
       appSettings: [
