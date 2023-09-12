@@ -35,7 +35,8 @@ stages:
               scriptType: pscore
               scriptLocation: inlineScript
               inlineScript: |
-               Write-Host "##vso[task.setvariable variable=containerRegistryNameOut]ContainerRegistryNAme"
+               $varval = contregname
+               Write-Host "##vso[task.setvariable variable=containerRegistryNameOut]$varval"
               #  $result = $($(az deployment group create `
               #  --resource-group $(resourceGroupName) `
               #  --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
