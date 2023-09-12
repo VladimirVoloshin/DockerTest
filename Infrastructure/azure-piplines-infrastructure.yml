@@ -46,7 +46,7 @@ stages:
                Write-Host WebAppName: $webAppName
                ##vso[task.setvariable variable=containerRegistryNameOut;isOutput=true;]$containerRegistryName
                ##vso[task.setvariable variable=webAppNameOut;isOutput=true;]$webAppName
-          - bash: echo $(containerRegistryNameOut)
+          - bash: echo $(setOutput.containerRegistryNameOut)
           - task: AzureCLI@2
             displayName: 'Add webhook for WebApi Image from registry'
             inputs:
