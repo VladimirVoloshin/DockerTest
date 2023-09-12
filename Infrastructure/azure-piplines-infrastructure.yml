@@ -32,7 +32,7 @@ stages:
             displayName: Create Resources
             inputs:
               azureSubscription: $(lib-subscriptionConn)
-              scriptType: pscore
+              scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
                result = $(az deployment group create --resource-group $(resourceGroupName) --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep --parameters location=$(location) imageWebApiName=$(imageWebApiName)) \
