@@ -40,11 +40,13 @@ stages:
                --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
                --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json)
                $containerRegistryName = $result.properties.outputs.dockerContainerRegistryName.value 
-               Write-Host $containerRegistryName
                $webAppName = $result.properties.outputs.webAppName.value
-               ##vso[task.setvariable variable=containerRegistryName;isOutput=true;]$containerRegistryName
-               ##vso[task.setvariable variable=webAppName;isOutput=true;]$webAppName
-          - bash: echo $(containerRegistryName)
+
+               Write-Host containerRegistryName: $containerRegistryName
+               Write-Host WebAppName: $webAppName
+               ##vso[task.setvariable variable=containerRegistryNameOut;isOutput=true;]$containerRegistryName
+               ##vso[task.setvariable variable=webAppNameOut;isOutput=true;]$webAppName
+          - bash: echo $(containerRegistryNameOut)
           - task: AzureCLI@2
             displayName: 'Add webhook for WebApi Image from registry'
             inputs:
@@ -54,8 +56,8 @@ stages:
               inlineScript: |
                 az acr webhook create `
                 --name $(imageWebApiName)CD `
-                --registry $(containerRegistryName) `
+                --registry $(containerRegistryNameOut) `
                 --resource-group $(resourceGroupName) `
                 --actions push `
-                --uri $(az webapp deployment container config --name $(webAppName) --resource-group $resourceGroupName --enable-cd true --query CI_CD_URL --output tsv) `
+                --uri $(az webapp deployment container config --name $(webAppNameOut) --resource-group $resourceGroupName --enable-cd true --query CI_CD_URL --output tsv) `
                 --scope "$($imageWebApiName):latest"
