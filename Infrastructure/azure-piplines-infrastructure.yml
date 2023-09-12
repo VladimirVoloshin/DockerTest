@@ -35,7 +35,7 @@ stages:
               scriptType: pscore
               scriptLocation: inlineScript
               inlineScript: |
-               $result = (az deployment group create `
+               $result = $(az deployment group create `
                --resource-group $resourceGroupName `
                --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
                orderItemsReserverImageName=$orderItemsReserverImageName imageWebApiName=$imageWebApiName) | ConvertFrom-Json
