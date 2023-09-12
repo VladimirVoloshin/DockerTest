@@ -52,11 +52,11 @@ stages:
               inlineScript: |
                echo $(containerRegistryNameOut)
                echo $(webAppNameOut)
-               echo $(az webapp deployment container config --name $(webAppNameOut) --resource-group $resourceGroupName --enable-cd true --query CI_CD_URL --output tsv)
+               echo $(az webapp deployment container config --name $(webAppNameOut) --resource-group $(resourceGroupName) --enable-cd true --query CI_CD_URL --output tsv)
                az acr webhook create `
                --name $(imageWebApiName)CD `
                --registry $(containerRegistryNameOut) `
                --resource-group $(resourceGroupName) `
                --actions push `
-               --uri $(az webapp deployment container config --name $(webAppNameOut) --resource-group $resourceGroupName --enable-cd true --query CI_CD_URL --output tsv) `
+               --uri $(az webapp deployment container config --name $(webAppNameOut) --resource-group $(resourceGroupName) --enable-cd true --query CI_CD_URL --output tsv) `
                --scope "$(imageWebApiName):latest"
