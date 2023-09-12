@@ -32,7 +32,7 @@ stages:
             displayName: Create Resources
             inputs:
               azureSubscription: $(lib-subscriptionConn)
-              scriptType: bash
+              scriptType: pscore
               scriptLocation: inlineScript
               inlineScript: |
                $result = (az deployment group create `
