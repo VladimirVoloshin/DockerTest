@@ -40,9 +40,9 @@ stages:
                --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
                --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json) 
                $containerRegistryName = $result.properties.outputs.dockerContainerRegistryName.value 
+               $webAppName = $result.properties.outputs.webAppName.value
                Write-Host "##vso[task.setvariable variable=containerRegistryName;]$containerRegistryName"
-
-
+               Write-Host "##vso[task.setvariable variable=webAppName;]$webAppName"
           # - task: AzureCLI@2
           #   displayName: 'Add webhook for WebApi Image from registry'
           #   inputs:
