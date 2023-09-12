@@ -38,7 +38,8 @@ stages:
                $result = $($(az deployment group create `
                --resource-group $(resourceGroupName) `
                --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
-               --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json) 
+               --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json)
+               Write-Host $result 
                $containerRegistryName = $result.properties.outputs.dockerContainerRegistryName.value 
                $webAppName = $result.properties.outputs.webAppName.value
                ##vso[task.setvariable variable=containerRegistryName;]$containerRegistryName
