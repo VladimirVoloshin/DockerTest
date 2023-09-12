@@ -35,19 +35,17 @@ stages:
               scriptType: pscore
               scriptLocation: inlineScript
               inlineScript: |
-               $varval = "contregname"
-               Write-Host "##vso[task.setvariable variable=containerRegistryNameOut]$varval"
-              #  $result = $($(az deployment group create `
-              #  --resource-group $(resourceGroupName) `
-              #  --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
-              #  --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json)
-              #  $containerRegistryName = $result.properties.outputs.dockerContainerRegistryName.value 
-              #  $webAppName = $result.properties.outputs.webAppName.value
+               $result = $($(az deployment group create `
+               --resource-group $(resourceGroupName) `
+               --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
+               --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json)
+               $containerRegistryName = $result.properties.outputs.dockerContainerRegistryName.value 
+               $webAppName = $result.properties.outputs.webAppName.value
 
-              #  Write-Host containerRegistryName: $containerRegistryName
-              #  Write-Host WebAppName: $webAppName
-              #  Write-Host ##vso[task.setvariable variable=containerRegistryNameOut]$containerRegistryName
-              #  Write-Host ##vso[task.setvariable variable=webAppNameOut]$webAppNam
+               Write-Host containerRegistryName: $containerRegistryName
+               Write-Host WebAppName: $webAppName
+               Write-Host ##vso[task.setvariable variable=containerRegistryNameOut]$containerRegistryName
+               Write-Host ##vso[task.setvariable variable=webAppNameOut]$webAppNam
           - powershell: echo $(containerRegistryNameOut)
           - task: AzureCLI@2
             displayName: 'Add webhook for WebApi Image from registry'
