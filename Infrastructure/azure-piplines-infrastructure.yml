@@ -1,5 +1,5 @@
 trigger:
-  - main
+  - manual
 
 pool:
   vmImage: ubuntu-latest
