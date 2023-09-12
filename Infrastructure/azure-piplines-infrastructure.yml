@@ -44,8 +44,8 @@ stages:
 
                Write-Host containerRegistryName: $containerRegistryName
                Write-Host WebAppName: $webAppName
-               Write-Host ##vso[task.setvariable variable=containerRegistryNameOut;isOutput=true;]$containerRegistryName
-               Write-Host ##vso[task.setvariable variable=webAppNameOut;isOutput=true;]$webAppName
+               Write-Host ##vso[task.setvariable variable=containerRegistryNameOut]$containerRegistryName
+               Write-Host ##vso[task.setvariable variable=webAppNameOut]$webAppName
                Write-Host containerRegistryNameOut: $(containerRegistryNameOut)
           - bash: echo $(containerRegistryNameOut)
           - task: AzureCLI@2
