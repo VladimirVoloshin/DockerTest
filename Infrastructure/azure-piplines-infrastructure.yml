@@ -41,12 +41,8 @@ stages:
                --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json)
                $containerRegistryName = $result.properties.outputs.dockerContainerRegistryName.value 
                $webAppName = $result.properties.outputs.webAppApiName.value
-
-               Write-Host containerRegistryName: $containerRegistryName
-               Write-Host WebAppName: $webAppName
                Write-Host "##vso[task.setvariable variable=containerRegistryNameOut]$containerRegistryName"
                Write-Host "##vso[task.setvariable variable=webAppNameOut]$webAppName"
-          - powershell: echo $(containerRegistryNameOut)
           - task: AzureCLI@2
             displayName: 'Add webhook for WebApi Image from registry'
             inputs:
@@ -56,6 +52,7 @@ stages:
               inlineScript: |
                echo $(containerRegistryNameOut)
                echo $(webAppNameOut)
+               echo $(resourceGroupName)
                az acr webhook create `
                --name $(imageWebApiName)CD `
                --registry $(containerRegistryNameOut) `
