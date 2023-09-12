@@ -51,7 +51,7 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 az acr webhook create `
-                --name "$(imageWebApiName)CD" `
+                --name $(imageWebApiName)CD `
                 --registry $(containerRegistryName) `
                 --resource-group $(resourceGroupName) `
                 --actions push `
