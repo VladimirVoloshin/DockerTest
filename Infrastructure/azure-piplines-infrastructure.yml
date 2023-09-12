@@ -35,7 +35,7 @@ stages:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
-               result = $(az deployment group create --resource-group $(resourceGroupName) --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep --parameters location=$(location) imageWebApiName=$(imageWebApiName)) \
+               result = az deployment group create --resource-group $(resourceGroupName) --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep --parameters location=$(location) imageWebApiName=$(imageWebApiName) \
                 echo $result
           # - task: AzureCLI@2
           #   displayName: 'Add webhook for WebApi Image from registry'
