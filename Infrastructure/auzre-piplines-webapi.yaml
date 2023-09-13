@@ -8,7 +8,7 @@ trigger:
       - WebApi
 jobs:
 - job: WebApiDocker
-  displayName: Build/Publish WebAPI Docker Image
+  displayName: Docker
   pool:
     vmImage: ubuntu-latest
   steps:
