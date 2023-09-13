@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
         {
             var user = new User();
 
-            user.Name = "John4";
+            user.Name = "John5";
             user.LastName = "Smith2";
             user.Email = "john.smith@email.com";
 
