@@ -1,5 +1,12 @@
 trigger:
-  - main
+ branches:
+    include:
+    - main
+    paths:
+     include:
+      - WebApi
+    #  exclude:
+    #  - docs/README.md
 
 pool:
   vmImage: ubuntu-latest

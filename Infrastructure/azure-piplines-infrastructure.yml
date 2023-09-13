@@ -1,5 +1,12 @@
 trigger:
-  - manual
+ branches:
+    include:
+    - main
+    paths:
+     include:
+      - Infrastructure
+    #  exclude:
+    #  - docs/README.md
 
 pool:
   vmImage: ubuntu-latest
