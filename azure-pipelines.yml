@@ -1,12 +1,14 @@
 name: $(date:yyyyMMdd)$(rev:.r)
-resources:
-  repositories:
-  - repository: self
-    type: git
-    ref: refs/heads/main
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - WebApi
 jobs:
-- job: Job_1
-  displayName: Agent job 1
+- job: WebApiDocker
+  displayName: WebApi Build And Publish Docker Image
   pool:
     vmImage: ubuntu-latest
   steps:
