@@ -4,7 +4,7 @@ param imageWebApiName string
 //var random = uniqueString('utcnow()')
 var random = 'd0ck8r'
 var acrSku = 'Basic'
-var webAppSku = 'S1'
+var webAppSku = 'F1'
 
 resource acrResource 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
   name: '${random}dockerregistry'
