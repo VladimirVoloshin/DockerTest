@@ -41,7 +41,7 @@ resource webApi 'Microsoft.Web/sites@2022-09-01' = {
     serverFarmId: plan.id
     httpsOnly: true
     siteConfig: {
-      alwaysOn: true
+    //  alwaysOn: true
       minTlsVersion: '1.2'
       linuxFxVersion: 'DOCKER|${acrResource.name}.azurecr.io/${imageWebApiName}:latest'
       appSettings: [
