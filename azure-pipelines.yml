@@ -1,0 +1,31 @@
+name: $(date:yyyyMMdd)$(rev:.r)
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/main
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+    clean: true
+    fetchTags: false
+  - task: Docker@0
+    displayName: Build an image
+    inputs:
+      azureSubscriptionEndpoint: dc22c38c-0f3b-4c78-9caa-2b2e83a62e7a
+      azureContainerRegistry: '{"loginServer":"d0ck8rdockerregistry.azurecr.io", "id" : "/subscriptions/32de0203-f852-40a8-87b2-611e68a7e808/resourceGroups/DockerDeployTestRG/providers/Microsoft.ContainerRegistry/registries/d0ck8rdockerregistry"}'
+      dockerFile: WebAPI/Dockerfile
+      imageName: WebAPI:$(Build.BuildId)
+      includeLatestTag: true
+  - task: Docker@0
+    displayName: Push an image
+    inputs:
+      azureSubscriptionEndpoint: dc22c38c-0f3b-4c78-9caa-2b2e83a62e7a
+      azureContainerRegistry: '{"loginServer":"d0ck8rdockerregistry.azurecr.io", "id" : "/subscriptions/32de0203-f852-40a8-87b2-611e68a7e808/resourceGroups/DockerDeployTestRG/providers/Microsoft.ContainerRegistry/registries/d0ck8rdockerregistry"}'
+      action: Push an image
+      imageName: WebAPI:$(Build.BuildId)
+      includeLatestTag: true
