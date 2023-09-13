@@ -1,12 +1,12 @@
 trigger:
- branches:
+  branches:
     include:
-    - main
-    paths:
-     include:
+      - main
+  paths:
+    include:
       - Infrastructure
-    #  exclude:
-    #  - docs/README.md
+      #  exclude:
+      #  - docs/README.md
 
 pool:
   vmImage: ubuntu-latest
@@ -42,21 +42,21 @@ stages:
               scriptType: pscore
               scriptLocation: inlineScript
               inlineScript: |
-               $result = $($(az deployment group create `
-               --resource-group $(resourceGroupName) `
-               --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
-               --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json)
-               $containerRegistryName = $result.properties.outputs.dockerContainerRegistryName.value 
-               $webAppName = $result.properties.outputs.webAppApiName.value
-               Write-Host "##vso[task.setvariable variable=containerRegistryNameOut]$containerRegistryName"
-               Write-Host "##vso[task.setvariable variable=webAppNameOut]$webAppName"
+                $result = $($(az deployment group create `
+                --resource-group $(resourceGroupName) `
+                --template-file $(Build.SourcesDirectory)/Infrastructure/main.bicep `
+                --parameters location=$(location) imageWebApiName=$(imageWebApiName)) | ConvertFrom-Json)
+                $containerRegistryName = $result.properties.outputs.dockerContainerRegistryName.value 
+                $webAppName = $result.properties.outputs.webAppApiName.value
+                Write-Host "##vso[task.setvariable variable=containerRegistryNameOut]$containerRegistryName"
+                Write-Host "##vso[task.setvariable variable=webAppNameOut]$webAppName"
           # - task: AzureCLI@2
           #   displayName: 'Add webhook for WebApi Image from registry'
           #   inputs:
           #     azureSubscription: $(lib-subscriptionConn)
           #     scriptType: pscore
           #     scriptLocation: inlineScript
-          #     inlineScript: |             
+          #     inlineScript: |
           #      az acr webhook create `
           #      --name $(imageWebApiName)CD `
           #      --registry $(containerRegistryNameOut) `

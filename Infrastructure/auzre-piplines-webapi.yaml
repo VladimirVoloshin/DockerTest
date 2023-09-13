@@ -1,9 +1,9 @@
 trigger:
- branches:
+  branches:
     include:
-    - main
-    paths:
-     include:
+      - main
+  paths:
+    include:
       - WebApi
     #  exclude:
     #  - docs/README.md
