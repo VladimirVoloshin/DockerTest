@@ -28,11 +28,11 @@ jobs:
       imageName: WebAPI:$(Build.BuildId)
       includeLatestTag: true
       buildArguments:  >-
-        fNameArg=John
+        fNameArg=$(lib-fname)
 
-        lNameArg=Doe
+        lNameArg=$(lib-lname)
 
-        emailArg=john.doe@email.com
+        emailArg=$(lib-email)
   - task: Docker@0
     displayName: Push an image
     inputs:
@@ -41,8 +41,5 @@ jobs:
       action: Push an image
       imageName: WebAPI:$(Build.BuildId)
       includeLatestTag: true
-  - pwsh: |    
-      $FIRST_NAME="John"
-      $LAST_NAME="Doe"
-      $EMAIL="john.doe@email.com"
+
 

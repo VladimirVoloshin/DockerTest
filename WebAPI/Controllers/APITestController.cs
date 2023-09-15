@@ -7,10 +7,12 @@ namespace WebAPI.Controllers
     public class APITestController : ControllerBase
     {
         private readonly ILogger<APITestController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public APITestController(ILogger<APITestController> logger)
+        public APITestController(ILogger<APITestController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet(Name = "GetUser")]
@@ -21,7 +23,7 @@ namespace WebAPI.Controllers
 
             user.Name = Environment.GetEnvironmentVariable("FIRST_NAME");
             user.LastName = Environment.GetEnvironmentVariable("LAST_NAME");
-            user.Email = Environment.GetEnvironmentVariable("EMAIL");;
+            user.Email = _configuration["UserEmail"];;
 
             return user;
         }

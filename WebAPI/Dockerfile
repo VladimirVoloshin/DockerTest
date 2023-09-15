@@ -7,8 +7,8 @@ ARG lNameArg
 ARG emailArg 
 
 ENV FIRST_NAME=$fNameArg
-ENV LAST_NAME="Doe"
-ENV EMAIL="john.doe@email.com"
+ENV LAST_NAME=$lNameArg
+ENV EMAIL=$emailArg 
 
 ENV ASPNETCORE_URLS=http://+:80
 
