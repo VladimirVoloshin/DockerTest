@@ -6,11 +6,11 @@ ARG fNameArg
 ARG lNameArg
 ARG emailArg 
 
-ENV ASPNETCORE_URLS=http://+:80
-
 ENV FIRST_NAME=$fNameArg
-ENV LAST_NAME=$lNameArg
-ENV EMAIL=$emailArg
+ENV LAST_NAME="Doe"
+ENV EMAIL="john.doe@email.com"
+
+ENV ASPNETCORE_URLS=http://+:80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG configuration=Release
