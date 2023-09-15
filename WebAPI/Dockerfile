@@ -2,7 +2,15 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
 
+ARG fNameArg
+ARG lNameArg
+ARG emailArg 
+
 ENV ASPNETCORE_URLS=http://+:80
+
+ENV FIRST_NAME=$fNameArg
+ENV LAST_NAME=$lNameArg
+ENV EMAIL=$emailArg
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG configuration=Release

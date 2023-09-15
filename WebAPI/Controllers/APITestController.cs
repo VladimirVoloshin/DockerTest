@@ -16,11 +16,12 @@ namespace WebAPI.Controllers
         [HttpGet(Name = "GetUser")]
         public User Get()
         {
+            _logger.LogWarning("GetUser called");
             var user = new User();
 
-            user.Name = "John7";
-            user.LastName = "Smith2";
-            user.Email = "john.smith@email.com";
+            user.Name = Environment.GetEnvironmentVariable("FIRST_NAME");
+            user.LastName = Environment.GetEnvironmentVariable("LAST_NAME");
+            user.Email = Environment.GetEnvironmentVariable("EMAIL");;
 
             return user;
         }

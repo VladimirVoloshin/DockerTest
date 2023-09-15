@@ -5,9 +5,8 @@ trigger:
   paths:
     include:
       - Infrastructure
-      #  exclude:
-      #  - docs/README.md
-
+    exclude:
+      -  Infrastructure/auzre-piplines-webapi.yaml
 pool:
   vmImage: ubuntu-latest
 
@@ -18,7 +17,7 @@ variables:
   - name: location
     value: westeurope
   - name: imageWebApiName
-    value: webapidockertest
+    value: webapi
 
 stages:
   - stage: Infrastructure
@@ -30,7 +29,7 @@ stages:
           - task: AzureCLI@2
             displayName: Create Resource Group
             inputs:
-              azureSubscription: $(lib-subscriptionConn)
+              azureSubscription: $(lib-azureSubscriptionConnName)
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
@@ -38,7 +37,7 @@ stages:
           - task: AzureCLI@2
             displayName: Create Resources
             inputs:
-              azureSubscription: $(lib-subscriptionConn)
+              azureSubscription: $(lib-azureSubscriptionConnName)
               scriptType: pscore
               scriptLocation: inlineScript
               inlineScript: |
@@ -50,17 +49,17 @@ stages:
                 $webAppName = $result.properties.outputs.webAppApiName.value
                 Write-Host "##vso[task.setvariable variable=containerRegistryNameOut]$containerRegistryName"
                 Write-Host "##vso[task.setvariable variable=webAppNameOut]$webAppName"
-          # - task: AzureCLI@2
-          #   displayName: 'Add webhook for WebApi Image from registry'
-          #   inputs:
-          #     azureSubscription: $(lib-subscriptionConn)
-          #     scriptType: pscore
-          #     scriptLocation: inlineScript
-          #     inlineScript: |
-          #      az acr webhook create `
-          #      --name $(imageWebApiName)CD `
-          #      --registry $(containerRegistryNameOut) `
-          #      --resource-group $(resourceGroupName) `
-          #      --actions push `
-          #      --uri $(az webapp deployment container config --name $(webAppNameOut) --resource-group $(resourceGroupName) --enable-cd true --query CI_CD_URL --output tsv) `
-          #      --scope "$(imageWebApiName):latest"
+          - task: AzureCLI@2
+            displayName: 'Add webhook for WebApi Image from registry'
+            inputs:
+              azureSubscription: $(lib-azureSubscriptionConnName)
+              scriptType: pscore
+              scriptLocation: inlineScript
+              inlineScript: |
+               az acr webhook create `
+               --name $(imageWebApiName)CD `
+               --registry $(containerRegistryNameOut) `
+               --resource-group $(resourceGroupName) `
+               --actions push `
+               --uri $(az webapp deployment container config --name $(webAppNameOut) --resource-group $(resourceGroupName) --enable-cd true --query CI_CD_URL --output tsv) `
+               --scope "$(imageWebApiName):latest"
