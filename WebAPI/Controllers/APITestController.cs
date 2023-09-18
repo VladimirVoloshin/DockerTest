@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
 
             user.Name = Environment.GetEnvironmentVariable("FIRST_NAME");
             user.LastName = Environment.GetEnvironmentVariable("LAST_NAME");
-            user.Email = _configuration["UserEmail"];;
+            user.Email = _configuration["User:Email"];;
 
             return user;
         }

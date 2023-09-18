@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging.ApplicationInsights;
+
 var builder = WebApplication.CreateBuilder(args);
 var config = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json", optional: false)
@@ -9,6 +11,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddApplicationInsightsTelemetry();
+builder.Logging.AddApplicationInsights(config["ApplicationInsights:InstrumentationKey"]);
 
 builder.Services.AddCors(opt =>
 {
